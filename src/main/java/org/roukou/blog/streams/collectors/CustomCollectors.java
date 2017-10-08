@@ -12,5 +12,6 @@ public final class CustomCollectors
     {
         return Collectors.collectingAndThen( Collectors.toList(),
                                              list -> list.toArray( convert.apply( list.size() ) ) );
+
     }
 }

@@ -12,7 +12,8 @@ public class SortedMapExample
         return sorted;
     }
 
-    private Map<Integer, String> sortedMapByKeyReverseUsingComparator( Map<Integer, String> input )
+    private Map<Integer, String> sortedMapByKeyReverseUsingComparator(
+        Map<Integer, String> input )
     {
         Map<Integer, String> sorted = new TreeMap<>( new Comparator<Integer>()
         {
@@ -27,7 +28,8 @@ public class SortedMapExample
         return sorted;
     }
 
-    private Map<Integer, String> sortedMapByValueUsingCustomComparaotr( Map<Integer, String> input )
+    private Map<Integer, String> sortedMapByValueUsingCustomComparaotr(
+        Map<Integer, String> input )
     {
 
         Map<Integer, String> sorted = new TreeMap<>(new CustomComparatorByValue( input));
@@ -37,7 +39,8 @@ public class SortedMapExample
 
     }
 
-    private Map<Integer, String> sortedMapByValueUsingLambdas( Map<Integer, String> input )
+    private Map<Integer, String> sortedMapByValueUsingLambdas(
+        Map<Integer, String> input )
     {
 
         Map<Integer, String > sorted = input.entrySet().stream()
