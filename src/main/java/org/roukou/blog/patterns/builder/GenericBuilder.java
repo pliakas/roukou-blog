@@ -1,4 +1,4 @@
-package org.roukou.blog.pattern.builder;
+package org.roukou.blog.patterns.builder;
 
 import java.util.ArrayList;
 import java.util.List;
