@@ -18,6 +18,5 @@ public class LocalVariablesForLambda
             .filter( word -> ( word.length() & 1) == 1  )
             .map( ( @NotNull  var word ) -> word.toUpperCase() )
             .collect( toList() ).forEach( System.out::println );
-
     }
 }
