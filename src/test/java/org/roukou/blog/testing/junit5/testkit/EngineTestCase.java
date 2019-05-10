@@ -17,7 +17,7 @@ import static java.util.stream.Collectors.groupingBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder( MethodOrderer.OrderAnnotation.class )
-public class EngineTestCase
+class EngineTestCase
 {
     private static final Pattern SPLIT_PATTERN = Pattern.compile("[- .:,]+");
 
@@ -29,6 +29,12 @@ public class EngineTestCase
         reader = Files.newBufferedReader(
             get( EngineTestCase.class.getClassLoader().getResource( "sample_test.txt" ).toURI() ),
             StandardCharsets.UTF_8 );
+    }
+
+    @AfterEach
+    void tearDown() throws IOException
+    {
+        reader.close();
     }
 
     @Test
@@ -78,4 +84,5 @@ public class EngineTestCase
     {
         assertTrue( true );
     }
+
 }

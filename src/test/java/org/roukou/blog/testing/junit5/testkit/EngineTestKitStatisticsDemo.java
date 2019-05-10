@@ -27,6 +27,6 @@ class EngineTestKitStatisticsDemo
             .selectors( selectClass( EngineTestCase.class) )
             .execute()
             .tests()
-            .assertStatistics( statistics -> statistics.started( 4 ).aborted( 1 ).succeeded( 2 ).failed( 1 ) );
+            .assertStatistics( statistics -> statistics.skipped( 1 ).started( 3 ).aborted( 1 ).succeeded( 2 ).failed( 1 ) );
     }
 }
