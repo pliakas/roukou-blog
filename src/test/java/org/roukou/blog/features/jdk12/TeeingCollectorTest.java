@@ -39,8 +39,25 @@ class TeeingCollectorTest
     }
 
     @Test
-    @DisplayName( "Separate even and odd length words from a file " )
-    void findWordsWithOddAndEvenLength()
+    @DisplayName( "Separate even and odd length words from a file - Using Java 11" )
+    void findWordsWithOddAndEvenLength_Java11()
+    {
+        var result = reader
+            .lines()
+            .flatMap( SPLIT_PATTERN::splitAsStream )
+            .collect( teeing(
+                filtering( word -> (  word.length() & 1 ) == 1, toList() ),
+                filtering( word -> ( word.length() % 2 ) == 0, toList() ),
+                ( List<String> odd, List<String> even) -> List.of( odd, even )) );
+
+        assertEquals( 58, result.get( 0 ).size() );
+        assertEquals( 49, result.get( 1 ).size() );
+    }
+
+
+    @Test
+    @DisplayName( "Separate even and odd length words from a file - Using Java 12" )
+    void findWordsWithOddAndEvenLength_Java12()
     {
        var result = reader
            .lines()
@@ -48,9 +65,10 @@ class TeeingCollectorTest
             .collect( teeing(
                 filtering( word -> (  word.length() & 1 ) == 1, toList() ),
                 filtering( word -> ( word.length() % 2 ) == 0, toList() ),
-                ( List<String> odd, List<String> even) -> List.of( odd, even )) );
+                ( List<String> odd, List<String> even ) -> List.of( odd, even )) );
 
        assertEquals( 58, result.get( 0 ).size() );
        assertEquals( 49, result.get( 1 ).size() );
     }
+
 }
