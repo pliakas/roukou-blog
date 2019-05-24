@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import static java.nio.file.Paths.get;
@@ -54,7 +55,6 @@ class TeeingCollectorTest
         assertEquals( 49, result.get( 1 ).size() );
     }
 
-
     @Test
     @DisplayName( "Separate even and odd length words from a file - Using Java 12" )
     void findWordsWithOddAndEvenLength_Java12()
@@ -70,5 +70,4 @@ class TeeingCollectorTest
        assertEquals( 58, result.get( 0 ).size() );
        assertEquals( 49, result.get( 1 ).size() );
     }
-
 }
