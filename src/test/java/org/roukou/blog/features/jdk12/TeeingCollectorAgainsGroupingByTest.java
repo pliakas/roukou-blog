@@ -80,23 +80,23 @@ class TeeingCollectorAgainsGroupingByTest
         assertEquals( 49, result.getRight().size() );
     }
 
-    @Test
-    @Order( 3 )
-    @EnabledOnJre( JRE.JAVA_12 )
-    @DisplayName( "Separate even and odd length words from a file - Using Java 12 with Immutable list" )
-    void findWordsWithOddAndEvenLength_Java12_withTuple()
-    {
-        var result = reader
-            .lines()
-            .flatMap( SPLIT_PATTERN::splitAsStream )
-            .collect( teeing(
-                filtering( word -> (  word.length() & 1 ) == 1, toList() ),
-                filtering( word -> ( word.length() % 2 ) == 0, toList() ),
-                ( List<String> odd, List<String> even) -> List.of( odd, even )) );
-
-        assertEquals( 58, result.get( 0 ).size() );
-        assertEquals( 49, result.get( 1 ).size() );
-    }
+//    @Test
+//    @Order( 3 )
+//    @EnabledOnJre( JRE.JAVA_12 )
+//    @DisplayName( "Separate even and odd length words from a file - Using Java 12 with Immutable list" )
+//    void findWordsWithOddAndEvenLength_Java12_withTuple()
+//    {
+//        var result = reader
+//            .lines()
+//            .flatMap( SPLIT_PATTERN::splitAsStream )
+//            .collect( teeing(
+//                filtering( word -> (  word.length() & 1 ) == 1, toList() ),
+//                filtering( word -> ( word.length() % 2 ) == 0, toList() ),
+//                ( List<String> odd, List<String> even) -> List.of( odd, even )) );
+//
+//        assertEquals( 58, result.get( 0 ).size() );
+//        assertEquals( 49, result.get( 1 ).size() );
+//    }
 
     @Test
     @Order( 4 )
