@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -22,6 +22,7 @@ public class SortingMapTest
     private static final Pattern SPLIT_PATTERN = Pattern.compile("[- .:,]+");
 
     private BufferedReader reader;
+    private Map<Integer, Long> wordFrequencyMap;
 
     @BeforeEach
     void readFile() throws IOException, URISyntaxException
@@ -42,10 +43,12 @@ public class SortingMapTest
     @DisplayName( "Categorize the words (key length sorted), where key=String::length & value=count of the words for this length" )
     void categorizeWordsBasedOnLength_ComparingByKey_NaturalOrder()
     {
-        Map<Integer, Long> result = reader
+        var result = reader
             .lines() //1
             .flatMap( SPLIT_PATTERN::splitAsStream ) //2
-            .collect( Collectors.groupingBy( String::length, Collectors.counting()) ); //3
+            .collect( Collectors.groupingBy( String::length,  HashMap::new, Collectors.counting()) ); //3
+
+        System.out.println( result );
 
         assertAll(  "Sorted Map by key (String::length",
             () -> assertEquals( Map.ofEntries(
@@ -59,21 +62,28 @@ public class SortingMapTest
                 entry( 8,  3L),
                 entry( 9,  2L),
                 entry(10,  2L),
-                entry(11,  1L)),
-            result) );
-
+                entry(11,  1L)).toString(),
+            result.toString()) );
     }
 
     @Test
     @Order( 1 )
     @DisplayName( "Categorize the words (key length sorted), where key=String::length & value=count of the words for this length" )
-    void categorizeWordsBasedOnLength_ComparingByValue_ReverseOrder()
+    void categorizeWordsBasedOnLength_ComparingByKey_ReverseOrder()
     {
+        //create a map based from the file
         Map<Integer, Long> result = reader
             .lines() //1
             .flatMap( SPLIT_PATTERN::splitAsStream ) //2
             .collect( Collectors.groupingBy( String::length, Collectors.counting()) ); //3
 
+        //create a map in descending order
+        Map<Integer, Long> reversed = new LinkedHashMap<>();
+        result.entrySet().stream()
+            .sorted( Map.Entry.comparingByKey( Comparator.reverseOrder() ) )
+            .forEach( entry -> reversed.put( entry.getKey(), entry.getValue() ) );
+
+        System.out.println( reversed );
         assertAll(  "Sorted Map by key (String::length",
             () -> assertEquals( Map.ofEntries(
                 entry( 1,  1L),
@@ -86,8 +96,10 @@ public class SortingMapTest
                 entry( 8,  3L),
                 entry( 9,  2L),
                 entry(10,  2L),
-                entry(11,  1L)),
-                result) );
+                entry(11,  1L)).toString(),
+
+                reversed.toString()
+            ) );
 
     }
 }
